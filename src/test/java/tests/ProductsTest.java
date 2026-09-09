@@ -4,13 +4,13 @@ import config.ApiConfig;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import io.restassured.path.json.JsonPath;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ProductsTest extends ApiConfig {
-
 
 
     @Test
@@ -32,5 +32,29 @@ public class ProductsTest extends ApiConfig {
         assertEquals(200, jsonPath.getInt("responseCode"));
         assertFalse(jsonPath.getList("products").isEmpty());
         assertEquals(1, jsonPath.getInt("products[0].id"));
+
+    }
+
+    @Test
+    public void postToAllProductsList() {
+        Response response =
+                given()
+                        .when()
+                        .post("/productsList");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+
+        String jsonBody = responseBody.substring(
+                responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+
+        assertEquals(405, jsonPath.getInt("responseCode"));
+        assertEquals("This request method is not supported.",
+                jsonPath.getString("message"));
     }
 }
