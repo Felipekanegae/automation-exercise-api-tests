@@ -62,8 +62,7 @@ public class LoginTest extends ApiConfig {
 
         String jsonBody = responseBody.substring(
                 responseBody.indexOf("{"),
-                responseBody.lastIndexOf("}") + 1
-        );
+                responseBody.lastIndexOf("}") + 1);
 
         JsonPath jsonPath = new JsonPath(jsonBody);
 
@@ -94,6 +93,34 @@ public class LoginTest extends ApiConfig {
         assertEquals(405, jsonPath.getInt("responseCode"));
         assertEquals("This request method is not supported.", jsonPath.getString("message"));
 
+    }
+
+    @Test
+    public void loginWithInvalidDetails() {
+
+        testData.loadTestData(
+                "src/test/resources/testData/apiTestData.xlsx", "Login", "CT010");
+
+        Response response =
+                given()
+                        .formParam("email", testData.getStringOf("EMAIL"))
+                        .formParam("password", testData.getStringOf("PASSWORD"))
+                        .when()
+                        .post("/verifyLogin");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+
+        String jsonBody = responseBody.substring(
+                responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+
+        assertEquals(404, jsonPath.getInt("responseCode"));
+        assertEquals("User not found!", jsonPath.getString("message"));
     }
 
 }
