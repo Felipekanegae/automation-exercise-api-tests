@@ -55,6 +55,34 @@ public class UserAccountTest extends ApiConfig {
 
         assertEquals(201, jsonPath.getInt("responseCode"));
         assertEquals("User created!", jsonPath.getString("message"));
+
+    }
+
+    @Test
+    public void deleteUserAccount() {
+        testData.loadTestData(
+                "src/test/resources/testData/apiTestData.xlsx", "Login", "CT012");
+
+        Response response =
+                given()
+                        .formParam("email", testData.getStringOf("EMAIL"))
+                        .formParam("password", testData.getStringOf("PASSWORD"))
+                        .when()
+                        .delete("/deleteAccount");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+
+        String jsonBody = responseBody.substring(
+                responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+
+        assertEquals(200, jsonPath.getInt("responseCode"));
+        assertEquals("Account deleted!", jsonPath.getString("message"));
     }
 
 
