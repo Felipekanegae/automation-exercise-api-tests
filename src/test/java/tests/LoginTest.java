@@ -6,6 +6,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import io.restassured.path.json.JsonPath;
 
+import java.sql.SQLOutput;
+
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,5 +69,31 @@ public class LoginTest extends ApiConfig {
 
         assertEquals(400, jsonPath.getInt("responseCode"));
         assertEquals("Bad request, email or password parameter is missing in POST request.", jsonPath.getString("message"));
+
     }
+
+    @Test
+    public void deleteToVerifyLogin() {
+
+        Response response =
+                given()
+                        .when()
+                        .delete("/verifyLogin");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+
+        String jsonBody = responseBody.substring(
+                responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+
+        assertEquals(405, jsonPath.getInt("responseCode"));
+        assertEquals("This request method is not supported.", jsonPath.getString("message"));
+
+    }
+
 }
