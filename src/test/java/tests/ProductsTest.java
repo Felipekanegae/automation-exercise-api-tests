@@ -1,5 +1,6 @@
 package tests;
 
+import testData.ExcelTestData;
 import config.ApiConfig;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,10 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class ProductsTest extends ApiConfig {
 
+    private final ExcelTestData testData = new ExcelTestData();
 
     @Test
     public void getAllProductsList() {
@@ -151,11 +154,15 @@ public class ProductsTest extends ApiConfig {
     }
 
     @Test
-    public void loginWithValidDetails(){
+    public void loginWithValidDetails() {
+
+        testData.loadTestData(
+                "src/test/resources/testData/apiTestData.xlsx", "Login", "CT007");
+
         Response response =
                 given()
-                        .formParam("email", "testesuperteste@teste.com")
-                        .formParam("password", "asdf1234")
+                        .formParam("email", testData.getStringOf("EMAIL"))
+                        .formParam("password", testData.getStringOf("PASSWORD"))
                         .when()
                         .post("/verifyLogin");
 
@@ -164,14 +171,15 @@ public class ProductsTest extends ApiConfig {
 
         String responseBody = response.getBody().asString();
 
-        String jsonBody = responseBody.substring(responseBody.indexOf("{"),
-                responseBody.lastIndexOf("}") + 1);
+        String jsonBody = responseBody.substring(
+                responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1
+        );
 
         JsonPath jsonPath = new JsonPath(jsonBody);
 
         assertEquals(200, jsonPath.getInt("responseCode"));
         assertEquals("User exists!", jsonPath.getString("message"));
-
     }
 
 }
