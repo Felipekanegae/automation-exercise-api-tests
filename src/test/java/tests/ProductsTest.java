@@ -96,8 +96,7 @@ public class ProductsTest extends ApiConfig {
         JsonPath jsonPath = new JsonPath(jsonBody);
 
         assertEquals(405, jsonPath.getInt("responseCode"));
-        assertEquals("This request method is not supported.",
-                jsonPath.getString("message"));
+        assertEquals("This request method is not supported.", jsonPath.getString("message"));
 
 
     }
@@ -125,6 +124,7 @@ public class ProductsTest extends ApiConfig {
 
         List<String> productNames = jsonPath.getList("products.name");
         assertTrue(productNames.stream().anyMatch(name -> name.toLowerCase().contains("top")));
+
     }
 
     @Test
@@ -147,6 +147,30 @@ public class ProductsTest extends ApiConfig {
         assertEquals(400, jsonPath.getInt("responseCode"));
         assertEquals("Bad request, search_product parameter is missing in POST request.",
                 jsonPath.getString("message"));
+
+    }
+
+    @Test
+    public void loginWithValidDetails(){
+        Response response =
+                given()
+                        .formParam("email", "testesuperteste@teste.com")
+                        .formParam("password", "asdf1234")
+                        .when()
+                        .post("/verifyLogin");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+
+        String jsonBody = responseBody.substring(responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+
+        assertEquals(200, jsonPath.getInt("responseCode"));
+        assertEquals("User exists!", jsonPath.getString("message"));
 
     }
 
