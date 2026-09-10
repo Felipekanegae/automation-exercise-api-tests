@@ -76,6 +76,29 @@ public class ProductsTest extends ApiConfig {
 
     }
 
+    @Test
+    public void putToAllBrandsList() {
+        Response response =
+                given()
+                        .when()
+                        .put("/brandsList");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+
+        String jsonBody = responseBody.substring(responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+        assertEquals(405, jsonPath.getInt("responseCode"));
+        assertEquals("This request method is not supported.",
+                jsonPath.getString("message"));
+
+
+    }
+
 
 
 }
