@@ -1,0 +1,5 @@
+testData\ExcelTestData.class
+tests\ProductsTest.class
+config\ApiConfig.class
+tests\LoginTest.class
+tests\BrandsTest.class
