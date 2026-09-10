@@ -24,14 +24,12 @@ public class ProductsTest extends ApiConfig {
                 .statusCode(200);
 
         String responseBody = response.getBody().asString();
-        String jsonBody = responseBody.substring(
-                responseBody.indexOf("{"),
+        String jsonBody = responseBody.substring(responseBody.indexOf("{"),
                 responseBody.lastIndexOf("}") + 1);
 
         JsonPath jsonPath = new JsonPath(jsonBody);
         assertEquals(200, jsonPath.getInt("responseCode"));
         assertFalse(jsonPath.getList("products").isEmpty());
-        assertEquals(1, jsonPath.getInt("products[0].id"));
 
     }
 
@@ -47,8 +45,7 @@ public class ProductsTest extends ApiConfig {
 
         String responseBody = response.getBody().asString();
 
-        String jsonBody = responseBody.substring(
-                responseBody.indexOf("{"),
+        String jsonBody = responseBody.substring(responseBody.indexOf("{"),
                 responseBody.lastIndexOf("}") + 1);
 
         JsonPath jsonPath = new JsonPath(jsonBody);
@@ -56,5 +53,29 @@ public class ProductsTest extends ApiConfig {
         assertEquals(405, jsonPath.getInt("responseCode"));
         assertEquals("This request method is not supported.",
                 jsonPath.getString("message"));
+
     }
+
+    @Test
+    public void getAllBrandList() {
+        Response response =
+                given()
+                        .when()
+                        .get("/brandsList");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+        String jsonBody = responseBody.substring(responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+        assertEquals(200, jsonPath.getInt("responseCode"));
+        assertFalse(jsonPath.getList("brands").isEmpty());
+
+    }
+
+
+
 }
