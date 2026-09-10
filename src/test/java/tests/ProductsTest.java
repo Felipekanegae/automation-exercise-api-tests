@@ -127,4 +127,27 @@ public class ProductsTest extends ApiConfig {
         assertTrue(productNames.stream().anyMatch(name -> name.toLowerCase().contains("top")));
     }
 
+    @Test
+    public void searchProductWithoutSearchProductParameter() {
+        Response response =
+                given()
+                        .when()
+                        .post("/searchProduct");
+
+        response.then()
+                .statusCode(200);
+
+        String responseBody = response.getBody().asString();
+
+        String jsonBody = responseBody.substring(responseBody.indexOf("{"),
+                responseBody.lastIndexOf("}") + 1);
+
+        JsonPath jsonPath = new JsonPath(jsonBody);
+
+        assertEquals(400, jsonPath.getInt("responseCode"));
+        assertEquals("Bad request, search_product parameter is missing in POST request.",
+                jsonPath.getString("message"));
+
+    }
+
 }
