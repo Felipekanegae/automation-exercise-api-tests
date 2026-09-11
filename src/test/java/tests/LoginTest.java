@@ -6,10 +6,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import io.restassured.path.json.JsonPath;
 
-import java.sql.SQLOutput;
-
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LoginTest extends ApiConfig {
 

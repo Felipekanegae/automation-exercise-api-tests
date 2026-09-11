@@ -8,8 +8,9 @@ import io.restassured.path.json.JsonPath;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProductsTest extends ApiConfig {
 
@@ -56,7 +57,6 @@ public class ProductsTest extends ApiConfig {
                 jsonPath.getString("message"));
 
     }
-
 
     @Test
     public void searchProduct() {

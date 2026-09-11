@@ -13,6 +13,8 @@ public class ExcelTestData {
 
     public void loadTestData(String filePath, String sheetName, String testCase) {
 
+        testData.clear();
+
         try (InputStream input = new FileInputStream(filePath);
              Workbook workbook = WorkbookFactory.create(input)) {
 

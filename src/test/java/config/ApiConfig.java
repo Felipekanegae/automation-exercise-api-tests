@@ -9,4 +9,5 @@ public class ApiConfig {
     public static void setup() {
         RestAssured.baseURI = "https://automationexercise.com/api";
     }
+
 }

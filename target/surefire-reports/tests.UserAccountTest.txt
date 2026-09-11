@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: tests.LoginTest
+Test set: tests.UserAccountTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.115 s -- in tests.LoginTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.240 s -- in tests.UserAccountTest

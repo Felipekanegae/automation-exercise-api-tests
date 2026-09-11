@@ -1,18 +1,18 @@
 package tests;
 
-
 import config.ApiConfig;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import io.restassured.path.json.JsonPath;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class BrandsTest extends ApiConfig {
 
     @Test
-    public void getAllBrandList() {
+    public void getAllBrandsList() {
         Response response =
                 given()
                         .when()
@@ -51,7 +51,6 @@ public class BrandsTest extends ApiConfig {
 
         assertEquals(405, jsonPath.getInt("responseCode"));
         assertEquals("This request method is not supported.", jsonPath.getString("message"));
-
 
     }
 

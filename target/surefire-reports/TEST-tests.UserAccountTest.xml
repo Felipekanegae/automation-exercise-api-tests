@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="tests.BrandsTest" time="2.938" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="tests.UserAccountTest" time="3.24" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -61,6 +61,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="putToAllBrandsList" classname="tests.BrandsTest" time="1.887"/>
-  <testcase name="getAllBrandList" classname="tests.BrandsTest" time="0.784"/>
+  <testcase name="createUserAccount" classname="tests.UserAccountTest" time="0.871"/>
+  <testcase name="updateUserAccount" classname="tests.UserAccountTest" time="0.824"/>
+  <testcase name="getUserAccountDetails" classname="tests.UserAccountTest" time="0.687"/>
+  <testcase name="deleteUserAccount" classname="tests.UserAccountTest" time="0.858"/>
 </testsuite>
